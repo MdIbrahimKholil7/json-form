@@ -1,54 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import Input from '../Pages/Input';
+import Table from '../Pages/Table';
 
 const Home = () => {
 
     const [data, setData] = useState([])
-
+    const name='Name'
     useEffect(() => {
         fetch('data.json')
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => setData(data))
     }, [])
 
 
+
+    useEffect(() => {
+     const result= data.filter(d=>{
+        // console.log(d.person)
+        if(name === 'Name'){
+            return d['person'] !== undefined
+        }
+     })
+
+     console.log(result)
+    //  console.log(d.person[name]) 
+    }, [data])
+
+
     return (
-        <div>
-            <div className="overflow-x-auto">
-                <table className="table table-zebra w-full">
-
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
-
-                        <tr>
-                            <th>2</th>
-                            <td>Hart Hagerty</td>
-                            <td>Desktop Support Technician</td>
-                            <td>Purple</td>
-                        </tr>
-
-                        <tr>
-                            <th>3</th>
-                            <td>Brice Swyre</td>
-                            <td>Tax Accountant</td>
-                            <td>Red</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div className='max-w-[930px] mx-auto py-20'>
+            <>
+                <Input data={data} />
+                <Table data={data} />
+            </>
         </div>
     );
 };
